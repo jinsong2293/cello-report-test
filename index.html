@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-t8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Hướng dẫn Kiểm tra và Resend Mail Cellopoint</title>
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/sky.min.css" id="theme">
+        <link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+                    <h1>📧 HƯỚNG DẪN KIỂM TRA VÀ XỬ LÝ EMAIL TRÊN HỆ THỐNG CELLOPOINT</h1>
+                </section>
+
+				<section>
+					<section>
+						<h2>1. GIỚI THIỆU VỀ HỆ THỐNG CELLOPOINT</h2>
+					</section>
+					<section>
+						<h3>1.1. Cellopoint là gì?</h3>
+						<p class="fragment"><strong>Cellopoint</strong> là một nền tảng quản lý và giám sát hệ thống email chuyên nghiệp, hoạt động như một <strong>gateway</strong> trung gian giữa máy chủ email nội bộ (ví dụ: Zimbra) và Internet.</p>
+					</section>
+					<section>
+						<h3>1.2. Vai trò và lợi ích</h3>
+						<ul>
+							<li class="fragment"><strong>Bảo mật nâng cao:</strong> Lọc spam, virus, mã độc, phishing.</li>
+							<li class="fragment"><strong>Giám sát và theo dõi:</strong> Cung cấp cái nhìn tổng quan về luồng email.</li>
+							<li class="fragment"><strong>Ghi log chi tiết:</strong> Hỗ trợ tra cứu và kiểm tra khi có sự cố.</li>
+							<li class="fragment"><strong>Xử lý lỗi linh hoạt:</strong> Cho phép gửi lại (resend) hoặc chuyển tiếp (forward) email.</li>
+							<li class="fragment"><strong>Cách ly email nghi ngờ (Quarantine):</strong> Tự động cách ly các email đáng ngờ.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>1.3. Sơ đồ luồng email</h3>
+						<div class="mermaid" style="background:white; padding: 20px; border-radius: 10px;">
+graph TD
+    A[Người gửi - Internet] --> B(Cellopoint Gateway);
+    B --> C[Máy chủ Mail nội bộ - Zimbra];
+    C --> D[Người nhận nội bộ];
+
+    C --> B;
+    B --> A;
+						</div>
+						<p class="fragment">📘 <strong>Lưu ý:</strong> Mọi thao tác đều được thực hiện trên giao diện quản lý của Cellopoint.</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>2. QUY TRÌNH ĐĂNG NHẬP VÀ GIAO DIỆN</h2>
+					</section>
+					<section>
+						<h3>2.1. Hướng dẫn đăng nhập</h3>
+						<ol>
+							<li><strong>Truy cập đường dẫn:</strong> <a href="https://cello.pyv.com.vn" target="_blank">https://cello.pyv.com.vn</a></li>
+							<li><strong>Nhập thông tin đăng nhập:</strong> Username & Password.</li>
+							<li><strong>Xác nhận:</strong> Nhấn nút "Login".</li>
+						</ol>
+					</section>
+					<section>
+						<h3>2.2. Tổng quan giao diện</h3>
+						<img src="giao dien.png" alt="Giao diện Cellopoint" style="max-height: 450px;">
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>3. KIỂM TRA VÀ THEO DÕI EMAIL (MAIL TRACKING)</h2>
+					</section>
+					<section>
+						<h3>3.1. Truy cập chức năng</h3>
+						<p>Từ giao diện chính, điều hướng đến menu: <strong>Mail → Tracking / Log</strong>.</p>
+						<img src="tim kiem.png" alt="Mail Tracking" style="max-height: 400px;">
+					</section>
+					<section>
+						<h3>3.2. Tiêu chí tìm kiếm hiệu quả</h3>
+						<ul>
+							<li><strong>Sender / Recipient:</strong> Địa chỉ email người gửi/nhận.</li>
+							<li><strong>Subject:</strong> Tiêu đề email.</li>
+							<li><strong>Status:</strong> Trạng thái (delivered, failed, deferred, quarantined).</li>
+							<li><strong>Date Range:</strong> Khoảng thời gian.</li>
+							<li><strong>Message ID / Queue ID:</strong> Cách tìm kiếm chính xác nhất.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>3.3. Phân tích chi tiết email</h3>
+						<p>Click vào email và chọn <strong>View Detail</strong> để xem:</p>
+						<ul>
+							<li>Thông tin cơ bản: Sender, Recipient, Subject.</li>
+							<li>Thông tin kỹ thuật: Relay, IP nguồn/đích.</li>
+							<li>Trạng thái và thời gian gửi.</li>
+							<li>Lý do lỗi (Error Message).</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>4. XỬ LÝ EMAIL BỊ CÁCH LY (QUARANTINE)</h2>
+					</section>
+					<section>
+						<h3>4.1. Truy cập giao diện</h3>
+						<p>Từ giao diện chính, điều hướng đến menu: <strong>Mail → Quarantine</strong>.</p>
+						<img src="mail cach ly.png" alt="Quarantine" style="max-height: 450px;">
+					</section>
+					<section>
+						<h3>4.2. Các thao tác xử lý</h3>
+						<ul>
+							<li class="fragment"><strong>View:</strong> Xem nội dung an toàn.</li>
+							<li class="fragment"><strong>Release:</strong> Giải phóng email đến hộp thư người nhận.</li>
+							<li class="fragment"><strong>Delete:</strong> Xóa vĩnh viễn email.</li>
+							<li class="fragment"><strong>Forward:</strong> Chuyển tiếp đến địa chỉ email khác.</li>
+							<li class="fragment"><strong>Resend:</strong> Gửi lại đến người nhận ban đầu.</li>
+						</ul>
+						<p class="fragment">⚠️ <strong>Cảnh báo:</strong> Chỉ Release/Resend khi chắc chắn email an toàn.</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>5. PHÂN TÍCH VÀ XỬ LÝ LỖI</h2>
+					</section>
+					<section>
+						<h3>5.1. Các mã lỗi phổ biến</h3>
+						<ul>
+							<li><strong>Lỗi tạm thời (4xx):</strong> Sự cố tạm thời, hệ thống sẽ tự thử lại. Có thể <strong>Resend</strong> để gửi lại ngay. (Ví dụ: `421`, `451`)</li>
+							<li><strong>Lỗi vĩnh viễn (5xx):</strong> Lỗi không thể khắc phục bằng cách thử lại. Cần kiểm tra thông tin. (Ví dụ: `550`, `554`)</li>
+						</ul>
+					</section>
+					<section>
+						<h3>5.2. Nguyên nhân và cách khắc phục</h3>
+						<table>
+							<thead>
+								<tr>
+									<th>Mã lỗi / Thông báo</th>
+									<th>Nguyên nhân phổ biến</th>
+									<th>Hướng xử lý</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><code>550 User unknown</code></td>
+									<td>Sai địa chỉ email người nhận</td>
+									<td>Kiểm tra lại địa chỉ email</td>
+								</tr>
+								<tr>
+									<td><code>554 Rejected as spam</code></td>
+									<td>IP bị blacklist, nội dung spam</td>
+									<td>Kiểm tra IP, điều chỉnh nội dung</td>
+								</tr>
+								<tr>
+									<td><code>451 Timeout</code></td>
+									<td>Lỗi kết nối, máy chủ quá tải</td>
+									<td>Thử gửi lại (resend) sau vài phút</td>
+								</tr>
+								<tr>
+									<td><code>Mailbox full</code></td>
+									<td>Hộp thư người nhận đã đầy</td>
+									<td>Báo người nhận giải phóng dung lượng</td>
+								</tr>
+							</tbody>
+						</table>
+					</section>
+					<section>
+						<h3>5.3. Hướng dẫn gửi lại (Resend)</h3>
+						<p>Bạn có thể gửi lại email từ giao diện <strong>Quarantine</strong> hoặc <strong>Mail Log</strong>.</p>
+						<img src="tra mai.png" alt="Resend Mail" style="max-height: 400px;">
+					</section>
+				</section>
+
+                <section>
+                    <h2>✅ 6. KIỂM TRA KẾT QUẢ SAU KHI RESEND</h2>
+                    <ol>
+                        <li class="fragment">Quay lại <strong>Mail Log</strong>.</li>
+                        <li class="fragment">Tìm lại bằng <code>Message ID</code> hoặc <code>Recipient</code>.</li>
+                        <li class="fragment">Đảm bảo trạng thái đã đổi sang <code>delivered</code>.</li>
+                        <li class="fragment">Nếu vẫn lỗi → kiểm tra lại phần <strong>Error Log</strong>.</li>
+                    </ol>
+                </section>
+
+			</div>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/markdown/markdown.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/reveal.js-mermaid-plugin@2.1.0/plugin/mermaid/mermaid.js"></script>
+		<script src="script.js"></script>
+	</body>
+</html>

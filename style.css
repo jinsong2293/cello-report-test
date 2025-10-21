@@ -1,0 +1,115 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f8;
+}
+
+.reveal {
+    font-size: 24px;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4 {
+    font-weight: 600;
+    color: #005a9e;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.reveal h1 {
+    font-size: 2.5em;
+}
+
+.reveal h2 {
+    font-size: 2em;
+}
+
+.reveal h3 {
+    font-size: 1.5em;
+}
+
+.reveal section img {
+    margin: 20px 0;
+    border: 5px solid #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+/* Slide Content Styles */
+.reveal ul, .reveal ol {
+    text-align: left;
+    margin: 0 auto 20px auto;
+    max-width: 80%;
+}
+
+.reveal li {
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.reveal p {
+    line-height: 1.5;
+}
+
+.reveal a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.reveal a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Table Styles */
+.reveal table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 90%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.reveal th, .reveal td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.reveal th {
+    background-color: #005a9e;
+    color: #fff;
+    font-weight: bold;
+}
+
+.reveal tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.reveal tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+.reveal code {
+    background-color: #e9ecef;
+    color: #c7254e;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Custom Fragment Animations */
+.reveal .fragment.fade-in-then-out {
+	opacity: 0;
+	display: none;
+}
+.reveal .fragment.fade-in-then-out.visible {
+	opacity: 1;
+	display: inline;
+}
+.reveal .fragment.fade-in-then-out.current-fragment {
+	opacity: 1;
+	display: inline;
+}
