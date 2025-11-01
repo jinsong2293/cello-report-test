@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en">
 	<head>
-		<meta charset="utf-t8">
+		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Hướng dẫn Kiểm tra và Resend Mail Cellopoint</title>
+		<title>Hướng Dẫn Toàn Diện Về Cellopoint</title>
 
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
@@ -15,37 +15,57 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-                    <h1>📧 HƯỚNG DẪN KIỂM TRA VÀ XỬ LÝ EMAIL TRÊN HỆ THỐNG CELLOPOINT</h1>
+                    <h1>📖 HƯỚNG DẪN TOÀN DIỆN VỀ QUẢN LÝ VÀ XỬ LÝ SỰ CỐ EMAIL TRÊN HỆ THỐNG CELLOPOINT</h1>
+                    <p>Tài liệu dành cho Quản trị viên, Support và các bên liên quan.</p>
                 </section>
 
 				<section>
 					<section>
-						<h2>1. GIỚI THIỆU VỀ HỆ THỐNG CELLOPOINT</h2>
+						<h2>1. TỔNG QUAN VỀ HỆ THỐNG EMAIL GATEWAY CELLOPOINT</h2>
 					</section>
 					<section>
 						<h3>1.1. Cellopoint là gì?</h3>
-						<p class="fragment"><strong>Cellopoint</strong> là một nền tảng quản lý và giám sát hệ thống email chuyên nghiệp, hoạt động như một <strong>gateway</strong> trung gian giữa máy chủ email nội bộ (ví dụ: Zimbra) và Internet.</p>
+						<p class="fragment"><strong>Cellopoint</strong> là một nền tảng quản lý và giám sát email chuyên nghiệp, hoạt động như một <strong>gateway</strong> (cổng kết nối) trung gian giữa máy chủ email nội bộ và Internet.</p>
 					</section>
 					<section>
-						<h3>1.2. Vai trò và lợi ích</h3>
+						<h3>1.2. Tại sao Doanh nghiệp cần Email Gateway?</h3>
 						<ul>
-							<li class="fragment"><strong>Bảo mật nâng cao:</strong> Lọc spam, virus, mã độc, phishing.</li>
-							<li class="fragment"><strong>Giám sát và theo dõi:</strong> Cung cấp cái nhìn tổng quan về luồng email.</li>
-							<li class="fragment"><strong>Ghi log chi tiết:</strong> Hỗ trợ tra cứu và kiểm tra khi có sự cố.</li>
-							<li class="fragment"><strong>Xử lý lỗi linh hoạt:</strong> Cho phép gửi lại (resend) hoặc chuyển tiếp (forward) email.</li>
-							<li class="fragment"><strong>Cách ly email nghi ngờ (Quarantine):</strong> Tự động cách ly các email đáng ngờ.</li>
+							<li class="fragment"><strong>Phòng thủ tuyến đầu:</strong> Ngăn chặn virus, ransomware, phishing, spoofing trước khi vào mạng nội bộ.</li>
+							<li class="fragment"><strong>Giảm tải cho Mail Server:</strong> Lọc email spam và độc hại giúp tối ưu hóa hiệu suất.</li>
+							<li class="fragment"><strong>Thực thi chính sách tập trung:</strong> Áp đặt chính sách bảo mật, kiểm soát nội dung tại một điểm duy nhất.</li>
+						</ul>
+					</section>
+                    <section>
+						<h3>1.3. Vai trò và lợi ích chính</h3>
+						<ul>
+							<li class="fragment"><strong>Bảo mật đa lớp:</strong> Lọc bỏ spam, virus, mã độc, phishing.</li>
+							<li class="fragment"><strong>Giám sát và Truy vết (Tracking):</strong> Theo dõi chi tiết hành trình email.</li>
+							<li class="fragment"><strong>Ghi log chi tiết:</strong> Lưu trữ nhật ký đầy đủ cho điều tra, kiểm toán.</li>
+							<li class="fragment"><strong>Xử lý lỗi linh hoạt:</strong> Gửi lại (resend) hoặc chuyển tiếp (forward) email khi gặp lỗi.</li>
+							<li class="fragment"><strong>Cách ly email nghi ngờ (Quarantine):</strong> Tự động cô lập email đáng ngờ để xem xét an toàn.</li>
 						</ul>
 					</section>
 					<section>
-						<h3>1.3. Sơ đồ luồng email</h3>
+						<h3>1.4. Sơ đồ luồng email chi tiết</h3>
 						<div class="mermaid" style="background:white; padding: 20px; border-radius: 10px;">
 graph TD
-    A[Người gửi - Internet] --> B(Cellopoint Gateway);
-    B --> C[Máy chủ Mail nội bộ - Zimbra];
-    C --> D[Người nhận nội bộ];
+    subgraph Internet
+        A[Người gửi bên ngoài]
+    end
+    subgraph "Hệ thống của Công ty"
+        B(Cellopoint Gateway)
+        C[Máy chủ Mail nội bộ - Zimbra]
+        D[Người nhận nội bộ]
+        E[Người gửi nội bộ]
+    end
 
-    C --> B;
-    B --> A;
+    A -- 1. Email gửi đến --> B;
+    B -- 2. Lọc & Kiểm tra --> C;
+    C -- 3. Phân phối --> D;
+
+    E -- 4. Email gửi đi --> C;
+    C -- 5. Chuyển tiếp --> B;
+    B -- 6. Lọc & Ghi log --> A;
 						</div>
 						<p class="fragment">📘 <strong>Lưu ý:</strong> Mọi thao tác đều được thực hiện trên giao diện quản lý của Cellopoint.</p>
 					</section>
@@ -53,12 +73,12 @@ graph TD
 
 				<section>
 					<section>
-						<h2>2. QUY TRÌNH ĐĂNG NHẬP VÀ GIAO DIỆN</h2>
+						<h2>2. HƯỚNG DẪN TRUY CẬP VÀ SỬ DỤNG</h2>
 					</section>
 					<section>
-						<h3>2.1. Hướng dẫn đăng nhập</h3>
+						<h3>2.1. Quy trình đăng nhập</h3>
 						<ol>
-							<li><strong>Truy cập đường dẫn:</strong> <a href="https://gateway.pyv.com.vn" target="_blank">https://gateway.pyv.com.vn</a></li>
+							<li><strong>Truy cập đường dẫn:</strong> <a href="https://cello.pyv.com.vn" target="_blank">https://cello.pyv.com.vn</a></li>
 							<li><strong>Nhập thông tin đăng nhập:</strong> Username & Password.</li>
 							<li><strong>Xác nhận:</strong> Nhấn nút "Login".</li>
 						</ol>
@@ -71,46 +91,118 @@ graph TD
 
 				<section>
 					<section>
-						<h2>3. KIỂM TRA VÀ THEO DÕI EMAIL (MAIL TRACKING)</h2>
+						<h2>3. CHỨC NĂNG THEO DÕI VÀ TRUY VẾT EMAIL (MAIL TRACKING)</h2>
 					</section>
 					<section>
 						<h3>3.1. Truy cập chức năng</h3>
-						<p>Từ giao diện chính, điều hướng đến menu: <strong>Mail → Tracking / Log</strong>.</p>
+						<p>Từ menu chính, điều hướng đến: <strong>Mail → Tracking / Log</strong>.</p>
 						<img src="tim kiem.png" alt="Mail Tracking" style="max-height: 400px;">
 					</section>
 					<section>
-						<h3>3.2. Tiêu chí tìm kiếm hiệu quả</h3>
+						<h3>3.2. Sử dụng bộ lọc hiệu quả</h3>
+						<table>
+							<thead>
+								<tr>
+									<th>Trường tìm kiếm</th>
+									<th>Mô tả chi tiết</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><strong>Sender</strong></td>
+									<td>Địa chỉ email người gửi.</td>
+								</tr>
+								<tr>
+									<td><strong>Recipient</strong></td>
+									<td>Địa chỉ email người nhận.</td>
+								</tr>
+								<tr>
+									<td><strong>Subject</strong></td>
+									<td>Tiêu đề email (có thể tìm kiếm một phần).</td>
+								</tr>
+								<tr>
+									<td><strong>Status</strong></td>
+									<td>Trạng thái email: `delivered`, `failed`, `deferred`, `quarantined`.</td>
+								</tr>
+								<tr>
+									<td><strong>Date Range</strong></td>
+									<td>Khoảng thời gian tìm kiếm.</td>
+								</tr>
+								<tr>
+									<td><strong>Message ID</strong></td>
+									<td>Mã định danh duy nhất của email, cách tìm chính xác nhất.</td>
+								</tr>
+								<tr>
+									<td><strong>Queue ID</strong></td>
+									<td>Mã định danh của email trong hàng đợi của Cellopoint.</td>
+								</tr>
+							</tbody>
+						</table>
+					</section>
+                    <section>
+						<h3>3.3. Mẹo tìm kiếm nâng cao</h3>
 						<ul>
-							<li><strong>Sender / Recipient:</strong> Địa chỉ email người gửi/nhận.</li>
-							<li><strong>Subject:</strong> Tiêu đề email.</li>
-							<li><strong>Status:</strong> Trạng thái (delivered, failed, deferred, quarantined).</li>
-							<li><strong>Date Range:</strong> Khoảng thời gian.</li>
-							<li><strong>Message ID / Queue ID:</strong> Cách tìm kiếm chính xác nhất.</li>
+							<li class="fragment">Kết hợp nhiều bộ lọc để thu hẹp kết quả.</li>
+							<li class="fragment">Sử dụng ký tự đại diện `*` nếu hệ thống hỗ trợ.</li>
+							<li class="fragment">Tìm theo `Client IP` hoặc `Server IP` để truy vết kết nối.</li>
 						</ul>
 					</section>
 					<section>
-						<h3>3.3. Phân tích chi tiết email</h3>
+						<h3>3.4. Phân tích chi tiết email</h3>
 						<p>Click vào email và chọn <strong>View Detail</strong> để xem:</p>
 						<ul>
 							<li>Thông tin cơ bản: Sender, Recipient, Subject.</li>
 							<li>Thông tin kỹ thuật: Relay, IP nguồn/đích.</li>
 							<li>Trạng thái và thời gian gửi.</li>
-							<li>Lý do lỗi (Error Message).</li>
+							<li><strong>Thông báo lỗi (Error Message):</strong> Thông tin quan trọng nhất để chẩn đoán.</li>
 						</ul>
 					</section>
 				</section>
 
 				<section>
 					<section>
-						<h2>4. XỬ LÝ EMAIL BỊ CÁCH LY (QUARANTINE)</h2>
+						<h2>4. QUẢN LÝ EMAIL BỊ CÁCH LY (QUARANTINE)</h2>
 					</section>
 					<section>
 						<h3>4.1. Truy cập giao diện</h3>
-						<p>Từ giao diện chính, điều hướng đến menu: <strong>Mail → Quarantine</strong>.</p>
+						<p>Từ menu chính, điều hướng đến: <strong>Mail → Quarantine</strong>.</p>
 						<img src="mail cach ly.png" alt="Quarantine" style="max-height: 450px;">
 					</section>
+                    <section>
+						<h3>4.2. Lý do email bị cách ly</h3>
+						<table>
+							<thead>
+								<tr>
+									<th>Lý do (Reason)</th>
+									<th>Giải thích</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><strong>Spam</strong></td>
+									<td>Email bị hệ thống đánh giá là thư rác.</td>
+								</tr>
+								<tr>
+									<td><strong>Virus</strong></td>
+									<td>Email chứa tệp đính kèm hoặc liên kết bị phát hiện là virus hoặc mã độc.</td>
+								</tr>
+								<tr>
+									<td><strong>Blacklist</strong></td>
+									<td>Địa chỉ IP của máy chủ gửi nằm trong danh sách đen (RBL).</td>
+								</tr>
+								<tr>
+									<td><strong>Content Filter</strong></td>
+									<td>Email vi phạm chính sách về nội dung.</td>
+								</tr>
+								<tr>
+									<td><strong>Phishing</strong></td>
+									<td>Email bị nhận dạng là một nỗ lực lừa đảo.</td>
+								</tr>
+							</tbody>
+						</table>
+					</section>
 					<section>
-						<h3>4.2. Các thao tác xử lý</h3>
+						<h3>4.3. Các thao tác xử lý</h3>
 						<ul>
 							<li class="fragment"><strong>View:</strong> Xem nội dung an toàn.</li>
 							<li class="fragment"><strong>Release:</strong> Giải phóng email đến hộp thư người nhận.</li>
@@ -118,23 +210,23 @@ graph TD
 							<li class="fragment"><strong>Forward:</strong> Chuyển tiếp đến địa chỉ email khác.</li>
 							<li class="fragment"><strong>Resend:</strong> Gửi lại đến người nhận ban đầu.</li>
 						</ul>
-						<p class="fragment">⚠️ <strong>Cảnh báo:</strong> Chỉ Release/Resend khi chắc chắn email an toàn.</p>
+						<p class="fragment">⚠️ <strong>Cảnh báo:</strong> Chỉ Release/Resend khi chắc chắn 100% email an toàn.</p>
 					</section>
 				</section>
 
 				<section>
 					<section>
-						<h2>5. PHÂN TÍCH VÀ XỬ LÝ LỖI</h2>
+						<h2>5. PHÂN TÍCH VÀ XỬ LÝ SỰ CỐ</h2>
 					</section>
 					<section>
-						<h3>5.1. Các mã lỗi phổ biến</h3>
+						<h3>5.1. Phân loại mã lỗi SMTP</h3>
 						<ul>
 							<li><strong>Lỗi tạm thời (4xx):</strong> Sự cố tạm thời, hệ thống sẽ tự thử lại. Có thể <strong>Resend</strong> để gửi lại ngay. (Ví dụ: `421`, `451`)</li>
-							<li><strong>Lỗi vĩnh viễn (5xx):</strong> Lỗi không thể khắc phục bằng cách thử lại. Cần kiểm tra thông tin. (Ví dụ: `550`, `554`)</li>
+							<li><strong>Lỗi vĩnh viễn (5xx):</strong> Lỗi không thể tự khắc phục. Cần phân tích và sửa lỗi gốc. (Ví dụ: `550`, `554`)</li>
 						</ul>
 					</section>
 					<section>
-						<h3>5.2. Nguyên nhân và cách khắc phục</h3>
+						<h3>5.2. Bảng tra cứu lỗi thường gặp</h3>
 						<table>
 							<thead>
 								<tr>
@@ -145,43 +237,129 @@ graph TD
 							</thead>
 							<tbody>
 								<tr>
-									<td><code>550 User unknown</code></td>
-									<td>Sai địa chỉ email người nhận</td>
-									<td>Kiểm tra lại địa chỉ email</td>
+									<td><code>550 5.1.1 User unknown</code></td>
+									<td>Sai địa chỉ email người nhận; tài khoản không tồn tại.</td>
+									<td>Kiểm tra lại chính tả địa chỉ email. Liên hệ người nhận để xác nhận.</td>
 								</tr>
 								<tr>
-									<td><code>554 Rejected as spam</code></td>
-									<td>IP bị blacklist, nội dung spam</td>
-									<td>Kiểm tra IP, điều chỉnh nội dung</td>
+									<td><code>554 5.7.1 Rejected as spam</code></td>
+									<td>IP người gửi bị blacklist; nội dung bị đánh dấu spam.</td>
+									<td>Kiểm tra IP trên các trang như `mxtoolbox.com`. Yêu cầu người nhận whitelist địa chỉ của bạn.</td>
 								</tr>
 								<tr>
-									<td><code>451 Timeout</code></td>
-									<td>Lỗi kết nối, máy chủ quá tải</td>
-									<td>Thử gửi lại (resend) sau vài phút</td>
+									<td><code>451 4.4.1 Timeout</code></td>
+									<td>Máy chủ đích không phản hồi; lỗi kết nối mạng.</td>
+									<td>Thử **Resend** sau vài phút. Kiểm tra kết nối mạng.</td>
+								</tr>
+								<tr>
+									<td><code>Connection refused</code></td>
+									<td>Firewall của máy chủ đích chặn kết nối; cổng SMTP bị đóng.</td>
+									<td>Liên hệ quản trị viên của người nhận để kiểm tra firewall.</td>
+								</tr>
+								<tr>
+									<td><code>Message quarantined</code></td>
+									<td>Email vi phạm chính sách bảo mật của Cellopoint.</td>
+									<td>Truy cập giao diện **Quarantine** để kiểm tra và xử lý.</td>
 								</tr>
 								<tr>
 									<td><code>Mailbox full</code></td>
-									<td>Hộp thư người nhận đã đầy</td>
-									<td>Báo người nhận giải phóng dung lượng</td>
+									<td>Hộp thư của người nhận đã đầy.</td>
+									<td>Thông báo cho người nhận để dọn dẹp hộp thư. Thử gửi lại sau.</td>
+								</tr>
+								<tr>
+									<td><code>Host not found</code> / `Domain not found`</td>
+									<td>Sai tên miền của người nhận; lỗi DNS.</td>
+									<td>Kiểm tra lại tên miền trong địa chỉ email (phần sau ký tự `@`).</td>
 								</tr>
 							</tbody>
 						</table>
 					</section>
+                    <section>
+						<h3>5.3. Quy trình xử lý sự cố</h3>
+                        <p><strong>Tình huống: Người dùng báo không nhận được email.</strong></p>
+						<ol>
+							<li class="fragment"><strong>Bước 1:</strong> Thu thập thông tin (người gửi, người nhận, thời gian).</li>
+							<li class="fragment"><strong>Bước 2:</strong> Kiểm tra trên <strong>Mail Tracking</strong>.</li>
+							<li class="fragment"><strong>Bước 3:</strong> Phân tích kết quả (delivered, quarantined, failed, hay không tìm thấy).</li>
+							<li class="fragment"><strong>Bước 4:</strong> Xử lý dựa trên trạng thái tìm được.</li>
+						</ol>
+					</section>
 					<section>
-						<h3>5.3. Hướng dẫn gửi lại (Resend)</h3>
+						<h3>5.4. Hướng dẫn gửi lại (Resend)</h3>
 						<p>Bạn có thể gửi lại email từ giao diện <strong>Quarantine</strong> hoặc <strong>Mail Log</strong>.</p>
 						<img src="tra mai.png" alt="Resend Mail" style="max-height: 400px;">
 					</section>
 				</section>
 
                 <section>
-                    <h2>✅ 6. KIỂM TRA KẾT QUẢ SAU KHI RESEND</h2>
-                    <ol>
-                        <li class="fragment">Quay lại <strong>Mail Log</strong>.</li>
-                        <li class="fragment">Tìm lại bằng <code>Message ID</code> hoặc <code>Recipient</code>.</li>
-                        <li class="fragment">Đảm bảo trạng thái đã đổi sang <code>delivered</code>.</li>
-                        <li class="fragment">Nếu vẫn lỗi → kiểm tra lại phần <strong>Error Log</strong>.</li>
-                    </ol>
+                    <section>
+                        <h2>6. KIỂM TRA VÀ XÁC NHẬN SAU KHI XỬ LÝ</h2>
+                    </section>
+                    <section>
+                        <h3>6.1. Các bước kiểm tra</h3>
+                        <ol>
+                            <li class="fragment">Quay lại <strong>Mail Tracking</strong>.</li>
+                            <li class="fragment">Tìm lại email vừa xử lý.</li>
+                            <li class="fragment">Đảm bảo trạng thái đã đổi sang <code>delivered</code>.</li>
+                            <li class="fragment">Nếu vẫn lỗi → kiểm tra log mới để tìm nguyên nhân.</li>
+                        </ol>
+                    </section>
+                    <section>
+                        <h3>6.2. Khi nào cần leo thang xử lý?</h3>
+                        <p>Khi đã thử hết các bước nhưng không thành công. Cần cung cấp đầy đủ thông tin:</p>
+                        <ul>
+                            <li>Message ID của email.</li>
+                            <li>Thông báo lỗi chi tiết.</li>
+                            <li>Các bước đã thực hiện.</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>7. BÁO CÁO VÀ THỐNG KÊ (REPORTING)</h2>
+                    </section>
+                    <section>
+                        <h3>7.1. Tầm quan trọng của báo cáo</h3>
+                        <p>Giúp có cái nhìn tổng quan về lưu lượng email, các mối đe dọa, và sức khỏe hệ thống.</p>
+                    </section>
+                    <section>
+                        <h3>7.2. Các loại báo cáo phổ biến</h3>
+                        <ul>
+                            <li><strong>Traffic Report:</strong> Báo cáo lưu lượng.</li>
+                            <li><strong>Spam/Virus Report:</strong> Thống kê mối đe dọa.</li>
+                            <li><strong>Top Senders/Recipients:</strong> Liệt kê người dùng hàng đầu.</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>7.3. Hướng dẫn tạo và xem báo cáo cơ bản</h3>
+                        <ol>
+                            <li class="fragment">Điều hướng đến menu <strong>Report</strong>.</li>
+                            <li class="fragment">Chọn loại báo cáo bạn muốn xem (ví dụ: `Mail Traffic`).</li>
+                            <li class="fragment">Chọn khoảng thời gian và các tiêu chí khác (nếu có).</li>
+                            <li class="fragment">Nhấn <strong>Generate</strong> hoặc <strong>View</strong> để xem kết quả.</li>
+                        </ol>
+                        <img src="report.png" alt="Giao diện báo cáo và thống kê" style="max-height: 400px;">
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>8. PHỤ LỤC: CÂU HỎI THƯỜNG GẶP (FAQ)</h2>
+                    </section>
+                    <section>
+                        <p><strong>1. Tôi có thể tự kiểm tra email của mình trên Cellopoint không?</strong></p>
+                        <p class="fragment">Thông thường, chỉ có tài khoản quản trị viên hoặc hỗ trợ kỹ thuật mới có quyền truy cập vào Cellopoint. Người dùng cuối nên liên hệ bộ phận IT khi có sự cố.</p>
+                        <hr>
+                        <p><strong>2. Tại sao một email hợp lệ từ đối tác lại bị đưa vào Quarantine?</strong></p>
+                        <p class="fragment">Có nhiều lý do: email có thể chứa các từ khóa nhạy cảm, đường link bị hệ thống đánh giá là đáng ngờ, hoặc máy chủ của đối tác tạm thời bị liệt vào blacklist. Hãy kiểm tra lý do trong giao diện Quarantine và cân nhắc whitelist nếu cần.</p>
+                        <hr>
+                        <p><strong>3. "Release" và "Resend" trong Quarantine khác nhau như thế nào?</strong></p>
+                        <p class="fragment">Về cơ bản, cả hai hành động đều nhằm mục đích gửi email đến người nhận. `Release` là thuật ngữ chung cho việc "thả" email ra khỏi khu vực cách ly. `Resend` nhấn mạnh hành động "gửi lại". Trong hầu hết các trường hợp, chức năng của chúng là tương đương.</p>
+                        <hr>
+                        <p><strong>4. Mất bao lâu để hệ thống tự động gửi lại email bị lỗi tạm thời (mã 4xx)?</strong></p>
+                        <p class="fragment">Thời gian này phụ thuộc vào cấu hình của hệ thống, nhưng thường là sau mỗi 15-30 phút, và hệ thống sẽ thử lại nhiều lần trong vài giờ hoặc thậm chí vài ngày trước khi từ bỏ và báo lỗi vĩnh viễn.</p>
+                    </section>
                 </section>
 
 			</div>
